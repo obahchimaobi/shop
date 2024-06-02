@@ -1,3 +1,9 @@
+@php
+    use App\Http\Controllers\UserController;
+    use App\Http\Controllers\CartController;
+@endphp
+
+
 @if (!Request::is('login') && !Request::is('register'))
     <!-- Begin Header Area -->
     <header>
@@ -167,7 +173,8 @@
                                 <!-- Begin Header Middle Wishlist Area -->
                                 <li class="hm-wishlist">
                                     <a href="{{ url('wishlist.html') }}">
-                                        <span class="cart-item-count wishlist-item-count">{{ $cart_no }}</span>
+                                        <span class="cart-item-count wishlist-item-count
+                                            cart-item-count wishlist-item-count">0</span>
                                         <i class="fa fa-heart-o"></i>
                                     </a>
                                 </li>
@@ -177,7 +184,11 @@
                                     <div class="hm-minicart-trigger">
                                         <span class="item-icon"></span>
                                         <span class="item-text">£80.00
-                                            <span class="cart-item-count">2</span>
+                                            @if (Auth::check())
+                                            <span class="cart-item-count">{{ UserController::class::cart_number() }}</span>
+                                        @else
+                                            <span class="cart-item-count">0</span>
+                                        @endif
                                         </span>
                                     </div>
                                     <span></span>
