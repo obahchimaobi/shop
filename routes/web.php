@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
@@ -18,3 +19,9 @@ Route::get('register', [PageController::class, 'register_page'])->name('register
 Route::post('register', [UserController::class, 'register'])->name('user.register');
 Route::post('login', [UserController::class, 'login'])->name('user.login');
 Route::get('logout', [UserController::class, 'logout'])->name('user.logout');
+
+// Admin Routes
+Route::get('admin', [AdminController::class, 'admin_login_page'])->name('admin.login-page');
+Route::middleware('admin')->group(function () {
+    Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+});

@@ -1,6 +1,6 @@
 @php
     use App\Http\Controllers\UserController;
-    use App\Http\Controllers\CartController;
+    // use App\Http\Controllers\CartController;
 @endphp
 
 
@@ -29,11 +29,20 @@
                                 <li>
                                     <div class="ht-setting-trigger"><span>Setting</span></div>
                                     <div class="setting ht-setting">
-                                        <ul class="ht-setting-list">
-                                            <li><a href="{{ url('login-register.html') }}">My Account</a></li>
-                                            <li><a href="{{ url('checkout.html') }}">Checkout</a></li>
-                                            <li><a href="{{ url('login-register.html') }}">Sign In</a></li>
-                                        </ul>
+                                        
+                                        @if (Auth::check())
+                                            <ul class="ht-setting-list">
+                                                <li><a href="{{ url('login-register.html') }}">My Account</a></li>
+                                                <li><a href="{{ url('checkout.html') }}">Checkout</a></li>
+
+                                                <li><a href="{{ route('user.logout') }}">Logout</a></li>
+                                            </ul>
+                                        @else
+                                            <ul class="ht-setting-list">
+                                                <li><a href="{{ route('register-page') }}">Sign Up</a></li>
+                                             <li><a href="{{ route('login-page') }}">Sign In</a></li>
+                                            </ul>
+                                        @endif
                                     </div>
                                 </li>
                                 <!-- Setting Area End Here -->
@@ -185,10 +194,10 @@
                                         <span class="item-icon"></span>
                                         <span class="item-text">£80.00
                                             @if (Auth::check())
-                                            <span class="cart-item-count">{{ UserController::class::cart_number() }}</span>
-                                        @else
-                                            <span class="cart-item-count">0</span>
-                                        @endif
+                                                <span class="cart-item-count">{{UserController::class::cart_number() }}</span>
+                                            @else
+                                                <span class="cart-item-count">0</span>
+                                            @endif
                                         </span>
                                     </div>
                                     <span></span>
@@ -265,7 +274,12 @@
                                     </li>
                                     <li><a href="{{ route('about-us') }}">About Us</a></li>
                                     <li><a href="{{ route('contact') }}">Contact</a></li>
-                                    <li><a href="{{ route('login-page') }}">Login</a></li>
+                                    
+                                    @if (!Auth::check())
+                                        <li><a href="{{ route('login-page') }}">Login</a></li>
+                                    @else
+                                        {{-- <li><a href="{{ route('login-page') }}">Login</a></li> --}}
+                                    @endif
                                 </ul>
                             </nav>
                         </div>
