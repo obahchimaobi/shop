@@ -11,5 +11,14 @@ class Admin extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'admins';
+    protected $fillable = [
+        'admin_name',
+        'admin_email',
+        'admin_password',
+    ];
+
+    public function getAuthPassword()
+    {
+        return $this->admin_password; // Change to your custom password column name
+    }
 }

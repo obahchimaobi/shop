@@ -21,7 +21,15 @@ Route::post('login', [UserController::class, 'login'])->name('user.login');
 Route::get('logout', [UserController::class, 'logout'])->name('user.logout');
 
 // Admin Routes
-Route::get('admin', [AdminController::class, 'admin_login_page'])->name('admin.login-page');
-Route::middleware('admin')->group(function () {
-    Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+Route::middleware(['IpWhiteList'])->group(function () {
+    Route::get('admin', [AdminController::class, 'admin_login_page'])->name('admin.login-page');
+    Route::get('admin/register', [AdminController::class, 'admin_register_page'])->name('admin.register-page');
+
+    Route::post('admin/register', [AdminController::class, 'admin_register'])->name('admin.register');
+    Route::post('admin/login', [AdminController::class, 'admin_login'])->name('admin.login');
+
+
+    Route::middleware(['admin', 'IpWhiteList'])->group(function () {
+        Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    });
 });
