@@ -24,12 +24,14 @@ Route::get('logout', [UserController::class, 'logout'])->name('user.logout');
 Route::middleware(['IpWhiteList'])->group(function () {
     Route::get('admin', [AdminController::class, 'admin_login_page'])->name('admin.login-page');
     Route::get('admin/register', [AdminController::class, 'admin_register_page'])->name('admin.register-page');
-
+    
     Route::post('admin/register', [AdminController::class, 'admin_register'])->name('admin.register');
     Route::post('admin/login', [AdminController::class, 'admin_login'])->name('admin.login');
 
 
     Route::middleware(['admin', 'IpWhiteList'])->group(function () {
+        Route::get('admin/add-item', [AdminController::class, 'add_item'])->name('admin.add-item');
+        Route::post('admin/add-item', [AdminController::class, 'add_item_to_cart'])->name('admin.add-item-to-cart');
         Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     });
 });
