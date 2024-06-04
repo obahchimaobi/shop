@@ -21,6 +21,8 @@ Route::post('login', [UserController::class, 'login'])->name('user.login');
 Route::get('logout', [UserController::class, 'logout'])->name('user.logout');
 
 Route::get('product/{name}/{id}', [PageController::class, 'item_info'])->name('item-info');
+Route::post('/add-to-cart/{id}', [PageController::class, 'store'])->name('add-to-cart');
+Route::get('/shopping-cart', [PageController::class, 'shopping_cart'])->name('shopping-cart');
 
 // Admin Routes
 Route::middleware(['IpWhiteList'])->group(function () {
