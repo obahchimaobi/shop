@@ -108,4 +108,11 @@ class AdminController extends Controller
 
         return back()->with('success', 'Item added successfully');
     }
+
+    public function all_items()
+    {
+        $items = Item::all();
+
+        return view('admin.components.all_items', compact('items'));
+    }
 }

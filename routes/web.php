@@ -20,6 +20,8 @@ Route::post('register', [UserController::class, 'register'])->name('user.registe
 Route::post('login', [UserController::class, 'login'])->name('user.login');
 Route::get('logout', [UserController::class, 'logout'])->name('user.logout');
 
+Route::get('product/{name}/{id}', [PageController::class, 'item_info'])->name('item-info');
+
 // Admin Routes
 Route::middleware(['IpWhiteList'])->group(function () {
     Route::get('admin', [AdminController::class, 'admin_login_page'])->name('admin.login-page');
@@ -32,6 +34,8 @@ Route::middleware(['IpWhiteList'])->group(function () {
     Route::middleware(['admin', 'IpWhiteList'])->group(function () {
         Route::get('admin/add-item', [AdminController::class, 'add_item'])->name('admin.add-item');
         Route::post('admin/add-item', [AdminController::class, 'add_item_to_cart'])->name('admin.add-item-to-cart');
+        Route::get('admin/all-items', [AdminController::class, 'all_items'])->name('admin.all-items');
+
         Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     });
 });

@@ -1,5 +1,8 @@
 @extends('admin.layouts.app')
 
+@section('title')
+    Login
+@endsection
 
 @section('content')
     <main>

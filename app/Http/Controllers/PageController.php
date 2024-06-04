@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -9,7 +10,8 @@ class PageController extends Controller
     //
     public function shop()
     {
-        return view('pages.shop');
+        $shop = Item::all();
+        return view('pages.shop', compact('shop'));
     }
 
     public function about_us()
@@ -30,5 +32,12 @@ class PageController extends Controller
     public function register_page()
     {
         return view('auth.register');
+    }
+
+    public function item_info($name, $id)
+    {
+        $item = Item::find($id);
+
+        return view('pages.item-info', compact('item'));
     }
 }
