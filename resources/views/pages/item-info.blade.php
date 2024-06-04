@@ -3,11 +3,17 @@
 
 @section('content')
     <!-- Begin Li's Breadcrumb Area -->
+
+    {{-- @unless (count($item) == 0)
+        @foreach ($item as $single_item)
+            
+        @endforeach
+    @endunless --}}
     <div class="breadcrumb-area">
         <div class="container">
             <div class="breadcrumb-content">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="{{ route('home') }}">Home</a></li>
                     <li class="active">Single Product Normal</li>
                 </ul>
             </div>
@@ -23,36 +29,7 @@
                     <div class="product-details-left">
                         <div class="product-details-images slider-navigation-1">
                             <div class="lg-image">
-                                <img src="images/product/large-size/1.jpg" alt="product image">
-                            </div>
-                            <div class="lg-image">
-                                <img src="images/product/large-size/2.jpg" alt="product image">
-                            </div>
-                            <div class="lg-image">
-                                <img src="images/product/large-size/3.jpg" alt="product image">
-                            </div>
-                            <div class="lg-image">
-                                <img src="images/product/large-size/4.jpg" alt="product image">
-                            </div>
-                            <div class="lg-image">
-                                <img src="images/product/large-size/5.jpg" alt="product image">
-                            </div>
-                            <div class="lg-image">
-                                <img src="images/product/large-size/6.jpg" alt="product image">
-                            </div>
-                        </div>
-                        <div class="product-details-thumbs slider-thumbs-1">
-                            <div class="sm-image"><img src="images/product/small-size/1.jpg" alt="product image thumb">
-                            </div>
-                            <div class="sm-image"><img src="images/product/small-size/2.jpg" alt="product image thumb">
-                            </div>
-                            <div class="sm-image"><img src="images/product/small-size/3.jpg" alt="product image thumb">
-                            </div>
-                            <div class="sm-image"><img src="images/product/small-size/4.jpg" alt="product image thumb">
-                            </div>
-                            <div class="sm-image"><img src="images/product/small-size/5.jpg" alt="product image thumb">
-                            </div>
-                            <div class="sm-image"><img src="images/product/small-size/6.jpg" alt="product image thumb">
+                                <img src="{{ asset('storage/' . $item->item_image) }}" alt="product image">
                             </div>
                         </div>
                     </div>
@@ -62,28 +39,13 @@
                 <div class="col-lg-7 col-md-6">
                     <div class="product-details-view-content sp-normal-content pt-60">
                         <div class="product-info">
-                            <h2>Today is a good day Framed poster</h2>
-                            <span class="product-details-ref">Reference: demo_15</span>
-                            <div class="rating-box pt-20">
-                                <ul class="rating rating-with-review-item">
-                                    <li><i class="fa fa-star-o"></i></li>
-                                    <li><i class="fa fa-star-o"></i></li>
-                                    <li><i class="fa fa-star-o"></i></li>
-                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                    <li class="review-item"><a href="#">Read Review</a></li>
-                                    <li class="review-item"><a href="#">Write Review</a></li>
-                                </ul>
-                            </div>
+                            <h2>{{ $item->item_name }}</h2>
                             <div class="price-box pt-20">
-                                <span class="new-price new-price-2">$57.98</span>
+                                <span class="new-price new-price-2">${{ $item->item_price_new }}</span>
                             </div>
                             <div class="product-desc">
                                 <p>
-                                    <span>100% cotton double printed dress. Black and white striped top and orange high
-                                        waisted skater skirt bottom. Lorem ipsum dolor sit amet, consectetur adipisicing
-                                        elit. quibusdam corporis, earum facilis et nostrum dolorum accusamus similique
-                                        eveniet quia pariatur.
+                                    <span>{{ $item->item_description }}
                                     </span>
                                 </p>
                             </div>

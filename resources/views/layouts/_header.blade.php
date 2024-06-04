@@ -192,7 +192,14 @@
                                 <li class="hm-minicart">
                                     <div class="hm-minicart-trigger">
                                         <span class="item-icon"></span>
-                                        <span class="item-text">£80.00
+                                        <span class="item-text">$
+                                            @if (Auth::check())
+                                                {{ UserController::class::total_price() }}
+                                            @else
+                                                <span class="cart-item-count">0</span>
+                                            @endif
+
+
                                             @if (Auth::check())
                                                 <span class="cart-item-count">{{UserController::class::cart_number() }}</span>
                                             @else
@@ -202,43 +209,8 @@
                                     </div>
                                     <span></span>
                                     <div class="minicart">
-                                        <ul class="minicart-product-list">
-                                            <li>
-                                                <a href="{{ url('single-product.html') }}"
-                                                    class="minicart-product-image">
-                                                    <img src="{{ url('images/product/small-size/5.jpg') }}"
-                                                        alt="cart products">
-                                                </a>
-                                                <div class="minicart-product-details">
-                                                    <h6><a href="{{ url('single-product.html') }}">Aenean eu
-                                                            tristique</a>
-                                                    </h6>
-                                                    <span>£40 x 1</span>
-                                                </div>
-                                                <button class="close" title="Remove">
-                                                    <i class="fa fa-close"></i>
-                                                </button>
-                                            </li>
-                                            <li>
-                                                <a href="{{ url('single-product.html') }}"
-                                                    class="minicart-product-image">
-                                                    <img src="{{ url('images/product/small-size/6.jpg') }}"
-                                                        alt="cart products">
-                                                </a>
-                                                <div class="minicart-product-details">
-                                                    <h6><a href="{{ url('single-product.html') }}">Aenean eu
-                                                            tristique</a>
-                                                    </h6>
-                                                    <span>£40 x 1</span>
-                                                </div>
-                                                <button class="close" title="Remove">
-                                                    <i class="fa fa-close"></i>
-                                                </button>
-                                            </li>
-                                        </ul>
-                                        <p class="minicart-total">SUBTOTAL: <span>£80.00</span></p>
                                         <div class="minicart-button">
-                                            <a href="{{ url('shopping-cart.html') }}"
+                                            <a href="{{ route('shopping-cart') }}"
                                                 class="li-button li-button-fullwidth li-button-dark">
                                                 <span>View Full Cart</span>
                                             </a>

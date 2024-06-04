@@ -3,6 +3,15 @@
 
 @section('content')
     <!-- Begin Li's Breadcrumb Area -->
+
+    @if (session('success'))
+        <h6 class="alert alert-success" style="font-weight: normal; font-size: 13px;">{{ session('success') }}</h6>
+    @endif
+
+    @if (session('error'))
+        <h6 class="alert alert-danger" style="font-weight: normal; font-size: 13px">{{ session('error') }}</h6>
+    @endif
+
     <div class="breadcrumb-area">
         <div class="container">
             <div class="breadcrumb-content">
@@ -76,7 +85,7 @@
                                                     <div class="single-product-wrap">
                                                         <div class="product-image">
                                                             <a href="{{ route('item-info', ['name'=>$items->item_name, 'id' => $items->id ]) }}">
-                                                                <img src="images/product/large-size/1.jpg"
+                                                                <img src="{{ asset('storage/' . $items->item_image) }}"
                                                                     alt="Li's Product Image">
                                                             </a>
                                                             <span class="sticker">New</span>
@@ -85,7 +94,7 @@
                                                             <div class="product_desc_info">
                                                                 <div class="product-review">
                                                                     <h5 class="manufacturer">
-                                                                        <a href="product-details.html">Graphic Corner</a>
+                                                                        <a href="product-details.html">{{ $items->item_category }}</a>
                                                                     </h5>
                                                                     <div class="rating-box">
                                                                         <ul class="rating">
@@ -107,15 +116,21 @@
                                                             </div>
                                                             <div class="add-actions">
                                                                 <ul class="add-actions-link">
-                                                                    <li class="add-cart active"><a href="shopping-cart.html">Add
-                                                                            to
-                                                                            cart</a></li>
-                                                                    <li><a href="#" title="quick view"
-                                                                            class="quick-view-btn" data-toggle="modal"
-                                                                            data-target="#exampleModalCenter"><i
-                                                                                class="fa fa-eye"></i></a></li>
-                                                                    <li><a class="links-details" href="wishlist.html"><i
-                                                                                class="fa fa-heart-o"></i></a></li>
+
+                                                                    <!-- USING A FORM FIELD TO ADD ITEMS TO CART -->
+                                                                    <form action="{{ route('add-to-cart', ['id'=>$items->id]) }}" method="post" enctype="multipart/form-data">
+
+                                                                        {{ csrf_field() }}
+                                                                        <input type="hidden" name="item_id" value="{{ $items->id }}">
+                                                                        <input type="hidden" name="item_name" value="{{ $items->item_name }}">
+                                                                        <input type="hidden" name="item_image" value="{{ $items->item_image }}">
+                                                                        <input type="hidden" name="item_price_old" value="{{ $items->item_price_old }}">
+                                                                        <input type="hidden" name="item_price_new" value="{{ $items->item_price_new }}">
+                                                                        <input type="hidden" name="item_category" value="{{ $items->item_category}}">
+                                                                        <input type="hidden" name="item_description" value="{{ $items->item_description }}">
+                                                                        
+                                                                        <button class="add-cart active btn mb-1 mt-1" type="submit" name="add_to_cart"><span>Add to cart</></button>
+                                                                    </form>
                                                                 </ul>
                                                             </div>
                                                         </div>
@@ -769,27 +784,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="paginatoin-area">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6">
-                                        <p>Showing 1-12 of 13 item(s)</p>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <ul class="pagination-box">
-                                            <li><a href="#" class="Previous"><i class="fa fa-chevron-left"></i>
-                                                    Previous</a>
-                                            </li>
-                                            <li class="active"><a href="#">1</a></li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li>
-                                                <a href="#" class="Next"> Next <i
-                                                        class="fa fa-chevron-right"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <!-- shop-products-wrapper end -->
@@ -797,5 +791,9 @@
             </div>
         </div>
     </div>
+    <div class="paginatoin-area">
+        {{ $shop->links('vendor.pagination.bootstrap-5') }}
+    </div>
+</div>
     <!-- Content Wraper Area End Here -->
 @endsection

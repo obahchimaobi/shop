@@ -32,7 +32,7 @@ class UserController extends Controller
     {
         $remeber = $request->has('remember');
 
-        
+
 
         $credentials = $request->validate([
             'email' => 'required',
@@ -67,6 +67,16 @@ class UserController extends Controller
             return $cart_no;
         } else {
             // 
+            return 0;
+        }
+    }
+
+    public static function total_price()
+    {
+        if (Auth::check()) {
+            $total_price = Cart::where('user_id', Auth::id())->sum('cart_price');
+            return $total_price;
+        } else {
             return 0;
         }
     }

@@ -17,9 +17,10 @@ return new class extends Migration
             $table->string('user_email');
             $table->string('cart_id');
             $table->string('cart_name');
-            $table->string('cart_description');
+            $table->longText('cart_description');
             $table->string('cart_price');
             $table->string('cart_image');
+            $table->string('cart_category');
             $table->string('item_quantity');
             $table->timestamps();
         });
