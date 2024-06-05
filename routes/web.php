@@ -24,6 +24,9 @@ Route::get('product/{name}/{id}', [PageController::class, 'item_info'])->name('i
 Route::post('/add-to-cart/{id}', [PageController::class, 'store'])->name('add-to-cart');
 Route::get('/shopping-cart', [PageController::class, 'shopping_cart'])->name('shopping-cart');
 
+Route::get('/remove-from-cart/{id}', [CartController::class, 'remove'])->name('remove-from-cart');
+Route::post('/update-cart/{id}', [CartController::class, 'update'])->name('update-cart');
+
 // Admin Routes
 Route::middleware(['IpWhiteList'])->group(function () {
     Route::get('admin', [AdminController::class, 'admin_login_page'])->name('admin.login-page');

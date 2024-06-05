@@ -74,7 +74,11 @@ class UserController extends Controller
     public static function total_price()
     {
         if (Auth::check()) {
-            $total_price = Cart::where('user_id', Auth::id())->sum('cart_price');
+            $total_price = Cart::where('user_id', Auth::id())
+                ->get()
+                ->sum(function ($cart) {
+                    return $cart->cart_price * $cart->item_quantity;
+                });
             return $total_price;
         } else {
             return 0;

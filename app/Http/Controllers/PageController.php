@@ -76,7 +76,7 @@ class PageController extends Controller
                 'cart_price' => $request->item_price_new,
                 'cart_image' => $request->item_image,
                 'cart_category' => $request->item_category,
-                'item_quantity' => '0'
+                'item_quantity' => 1
             ]);
     
             $cart->save();
