@@ -1,4 +1,12 @@
+@php
+    use App\Http\Controllers\UserController;
+@endphp
+
 @extends('layouts.app')
+
+@section('title')
+    Cart
+@endsection
 
 @section('content')
     <!-- Begin Li's Breadcrumb Area -->
@@ -27,7 +35,6 @@
                                     <th class="cart-product-name">Product</th>
                                     <th class="li-product-price">Unit Price</th>
                                     <th class="li-product-quantity">Quantity</th>
-                                    <th class="li-product-subtotal">Total</th>
                                     <th class="li-product-subtotal">Update</th>
                                 </tr>
                             </thead>
@@ -37,17 +44,15 @@
                                     @foreach ($cart as $cartItem)
                                         <tr>
                                             <td class="li-product-remove"><a
-                                                    href="{{ route('remove-from-cart', ['id' => $cartItem->id]) }}"><i
-                                                        class="fa fa-times"></i></a>
+                                                    href="{{ route('remove-from-cart', ['id' => $cartItem->id]) }}" class="btn btn-danger btn-sm"><i
+                                                        class="fa fa-times text-white"></i></a>
                                             </td>
-                                            <td class="li-product-thumbnail"><a href="#"><img
-                                                        src="{{ asset('storage/' . $cartItem->cart_image) }}"
-                                                        alt="Li's Product Image" style="width: 100px; height: 100px;"></a>
+                                            <td class="li-product-thumbnail"><a href="#"><img src="{{ asset('storage/' . $cartItem->cart_image) }}" alt="Li's Product Image" style="width: 100px; height: 100px;"></a>
                                             </td>
-                                            <td class="li-product-name"><a href="#">{{ $cartItem->cart_name }}</a>
+                                            <td class="li-product-name"><a href="#" class="text-dark">{{ $cartItem->cart_name }}</a>
                                             </td>
-                                            <td class="li-product-price"><span
-                                                    class="amount">${{ $cartItem->cart_price }}</span></td>
+                                            <td class="li-product-price"><span class="amount">${{ $cartItem->cart_price }}</span></td>
+
                                             <form action="{{ route('update-cart', ['id'=>$cartItem->id]) }}" method="post">
 
                                                 {{ csrf_field() }}
@@ -61,9 +66,8 @@
                                                         <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                                                     </div>
                                                 </td>
-                                                <td class="product-subtotal"><span class="amount">$</span></td>
                                                 <td class="product-subtotal"><button
-                                                        class="btn btn-dark btn-md p-2 pr-4 pl-4" style="font-weight: bold; font-size: 15px; border-radius: 0%">UPDATE</button>
+                                                        class="btn btn-dark btn-md p-2 pr-20 pl-20" style="font-weight: bold; font-size: 13px; border-radius: 0%">UPDATE</button>
                                                 </td>
                                             </form>
                                         </tr>
@@ -88,8 +92,17 @@
                             <div class="cart-page-total">
                                 <h2>Cart totals</h2>
                                 <ul>
-                                    <li>Subtotal <span>$130.00</span></li>
-                                    <li>Total <span>$130.00</span></li>
+                                    @if (Auth::check())
+                                        <li>Subtotal <span>${{ UserController::class::total_price() }}</span></li>
+                                    @else
+                                        <li>Subtotal <span>$0</span></li>
+                                    @endif
+
+                                    @if (Auth::check())
+                                        <li>Total <span>${{ UserController::class::total_price() }}</span></li>
+                                    @else
+                                        <li>Total <span>$0</span></li>
+                                    @endif
                                 </ul>
                                 <a href="#">Proceed to checkout</a>
                             </div>

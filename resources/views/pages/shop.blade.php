@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title')
+    Shop
+@endsection
 
 @section('content')
     <!-- Begin Li's Breadcrumb Area -->

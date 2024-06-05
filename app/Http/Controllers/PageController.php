@@ -54,40 +54,44 @@ class PageController extends Controller
 
     public function store(Request $request, $id)
     {
-        $request->validate([
-            'item_id' => 'required',
-            'item_name' => 'required',
-            'item_image' => 'required',
-            'item_price_old' => 'required',
-            'item_price_new' => 'required',
-            'item_category' => 'required',
-            'item_description' => 'required'
-        ]);
-
-        $check_item = Cart::where('cart_id', $id)->where('user_email', Auth::user()->email)->first();
-
-        if (!$check_item) {
-            $cart = new Cart([
-                'user_id' => Auth::user()->id,
-                'user_email' => Auth::user()->email,
-                'cart_id' => $request->item_id,
-                'cart_name' => $request->item_name,
-                'cart_description' => $request->item_description,
-                'cart_price' => $request->item_price_new,
-                'cart_image' => $request->item_image,
-                'cart_category' => $request->item_category,
-                'item_quantity' => 1
+        if (Auth::check()) {
+            $request->validate([
+                'item_id' => 'required',
+                'item_name' => 'required',
+                'item_image' => 'required',
+                'item_price_old' => 'required',
+                'item_price_new' => 'required',
+                'item_category' => 'required',
+                'item_description' => 'required'
             ]);
-    
-            $cart->save();
-    
-            if ($cart->save()) {
-                return back()->with('success', 'Item added to cart successfully');
+
+            $check_item = Cart::where('cart_id', $id)->where('user_email', Auth::user()->email)->first();
+
+            if (!$check_item) {
+                $cart = new Cart([
+                    'user_id' => Auth::user()->id,
+                    'user_email' => Auth::user()->email,
+                    'cart_id' => $request->item_id,
+                    'cart_name' => $request->item_name,
+                    'cart_description' => $request->item_description,
+                    'cart_price' => $request->item_price_new,
+                    'cart_image' => $request->item_image,
+                    'cart_category' => $request->item_category,
+                    'item_quantity' => 1
+                ]);
+
+                $cart->save();
+
+                if ($cart->save()) {
+                    return back()->with('success', 'Item added to cart successfully');
+                } else {
+                    return back()->with('error', 'Failed to add item to cart');
+                }
             } else {
-                return back()->with('error', 'Failed to add item to cart');
+                return back()->with('error', 'Item already in cart');
             }
         } else {
-            return back()->with('error', 'Item already in cart');
+            return back()->with('error', 'You must login to add item');
         }
     }
 }
