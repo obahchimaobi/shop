@@ -2,6 +2,15 @@
 
 
 @section('content')
+
+    @if (session('success'))
+        <h6 class="alert alert-success" style="font-size: 14px; font-weight: normal;">{{ session('success') }}</h6>
+    @endif
+
+    @if (session('error'))
+        <h6 class="alert alert-danger" style="font-size: 14px; font-weight: normal;">{{ session('error') }}</h6>
+    @endif
+    
     <!-- Begin Slider With Banner Area -->
     <div class="slider-with-banner">
         <div class="container">

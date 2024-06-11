@@ -192,18 +192,18 @@
                                 <li class="hm-minicart">
                                     <div class="hm-minicart-trigger">
                                         <span class="item-icon"></span>
-                                        <span class="item-text">$
+                                        
                                             @if (Auth::check())
+                                            <span class="item-text">$
                                                 {{ UserController::class::total_price() }}
-                                            @else
-                                                <span class="cart-item-count">0</span>
-                                            @endif
 
-
-                                            @if (Auth::check())
-                                                <span class="cart-item-count">{{UserController::class::cart_number() }}</span>
+                                                <span class="cart-item-count">{{UserController::class::cart_number() }}
+                                                </span>
+                                            </span>
                                             @else
-                                                <span class="cart-item-count">0</span>
+                                                <span class="item-text">$0
+                                                    <span class="cart-item-count">0</span>
+                                                </span>
                                             @endif
                                         </span>
                                     </div>

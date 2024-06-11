@@ -38,8 +38,12 @@ class PageController extends Controller
 
     public function shopping_cart()
     {
-        $cart = Cart::where('user_email', Auth::user()->email)->get();
-        return view('pages.shopping-cart', compact('cart'));
+        if (Auth::check()) {
+            $cart = Cart::where('user_email', Auth::user()->email)->get();
+            return view('pages.shopping-cart', compact('cart'));
+        } else {
+            return redirect()->back()->with('error', 'Login required');
+        }
     }
 
     public function item_info($name, $id)
