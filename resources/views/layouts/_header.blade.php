@@ -252,6 +252,12 @@
                                     @else
                                         {{-- <li><a href="{{ route('login-page') }}">Login</a></li> --}}
                                     @endif
+
+                                    @if (Auth::check())
+                                        <li><a href="{{ route('my.account') }}" class="ml-3">My Account</a></li>
+                                    @else
+                                    {{-- <li><a href="{{ route('my.account') }}" class="ml-3">My Account</a></li> --}}
+                                    @endif
                                 </ul>
                             </nav>
                         </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -74,10 +75,38 @@ class UserController extends Controller
     public static function total_price()
     {
         if (Auth::check()) {
-            $total_price = Cart::where('user_id', Auth::id())->sum('cart_price');
+            $total_price = Cart::where('user_id', Auth::id())
+                ->get()
+                ->sum(function ($cart) {
+                    return $cart->cart_price * $cart->item_quantity;
+                });
+
             return $total_price;
         } else {
             return 0;
         }
+    }
+
+    public function my_account()
+    {
+        // display only the first last item
+
+        $item = Cart::get();
+
+        return view('auth.my-account', compact('item'));
+    }
+
+    public function update_cart(Request $request, $id)
+    {
+        $item = Cart::findOrFail($id);
+
+        $request->validate([
+            'item_quantity' => 'required|integer|min:1',
+        ]);
+
+        $item->update(['item_quantity' => $request->item_quantity]);
+
+        // Return a response, e.g., a redirect or a JSON response
+        return redirect()->back()->with('success', 'Cart updated successfully');
     }
 }

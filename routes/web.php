@@ -27,6 +27,10 @@ Route::get('/shopping-cart', [PageController::class, 'shopping_cart'])->name('sh
 
 Route::post('product/{name}/{id}', [RatingsController::class, 'rate'])->name('rate.item');
 
+Route::get('/my-account', [UserController::class, 'my_account'])->name('my.account');
+
+Route::post('/update-cart/{id}', [UserController::class, 'update_cart'])->name('cart.update');
+
 // Admin Routes
 Route::middleware(['IpWhiteList'])->group(function () {
     Route::get('admin', [AdminController::class, 'admin_login_page'])->name('admin.login-page');
