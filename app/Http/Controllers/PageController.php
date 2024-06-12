@@ -71,28 +71,29 @@ class PageController extends Controller
 
             $check_item = Cart::where('cart_id', $id)->where('user_email', Auth::user()->email)->first();
 
-        if (!$check_item) {
-            $cart = new Cart([
-                'user_id' => Auth::user()->id,
-                'user_email' => Auth::user()->email,
-                'cart_id' => $request->item_id,
-                'cart_name' => $request->item_name,
-                'cart_description' => $request->item_description,
-                'cart_price' => $request->item_price_new,
-                'cart_image' => $request->item_image,
-                'cart_category' => $request->item_category,
-                'item_quantity' => '0'
-            ]);
-    
-            $cart->save();
-    
-            if ($cart->save()) {
-                return back()->with('success', 'Item added to cart successfully');
+            if (!$check_item) {
+                $cart = new Cart([
+                    'user_id' => Auth::user()->id,
+                    'user_email' => Auth::user()->email,
+                    'cart_id' => $request->item_id,
+                    'cart_name' => $request->item_name,
+                    'cart_description' => $request->item_description,
+                    'cart_price' => $request->item_price_new,
+                    'cart_image' => $request->item_image,
+                    'cart_category' => $request->item_category,
+                    'item_quantity' => '0'
+                ]);
+
+                $cart->save();
+
+                if ($cart->save()) {
+                    return back()->with('success', 'Item added to cart successfully');
+                } else {
+                    return back()->with('error', 'Failed to add item to cart');
+                }
             } else {
-                return back()->with('error', 'Failed to add item to cart');
+                return back()->with('error', 'Item already in cart');
             }
-        } else {
-            return back()->with('error', 'Item already in cart');
         }
     }
 }
