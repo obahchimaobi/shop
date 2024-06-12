@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\RatingsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,8 @@ Route::get('logout', [UserController::class, 'logout'])->name('user.logout');
 Route::get('product/{name}/{id}', [PageController::class, 'item_info'])->name('item-info');
 Route::post('/add-to-cart/{id}', [PageController::class, 'store'])->name('add-to-cart');
 Route::get('/shopping-cart', [PageController::class, 'shopping_cart'])->name('shopping-cart');
+
+Route::post('product/{name}/{id}', [RatingsController::class, 'rate'])->name('rate.item');
 
 // Admin Routes
 Route::middleware(['IpWhiteList'])->group(function () {

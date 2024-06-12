@@ -67,9 +67,6 @@
                                             placeholder="Coupon code" type="text">
                                         <input class="button" name="apply_coupon" value="Apply coupon" type="submit">
                                     </div>
-                                    <div class="coupon2">
-                                        <input class="button" name="update_cart" value="Update cart" type="submit">
-                                    </div>
                                 </div>
                             </div>
                         </div>

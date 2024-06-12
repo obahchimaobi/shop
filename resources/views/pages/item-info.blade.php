@@ -148,16 +148,12 @@
                                             <div class="modal-inner-area row">
                                                 <div class="col-lg-6">
                                                     <div class="li-review-product">
-                                                        <img src="images/product/large-size/3.jpg" alt="Li's Product">
+                                                        <img src="{{ asset('storage/' . $item->item_image) }}" alt="Li's Product">
                                                         <div class="li-review-product-desc">
-                                                            <p class="li-product-name">Today is a good day Framed poster
+                                                            <p class="li-product-name">{{ $item->item_name }}
                                                             </p>
                                                             <p>
-                                                                <span>Beach Camera Exclusive Bundle - Includes Two Samsung
-                                                                    Radiant 360 R3 Wi-Fi Bluetooth Speakers. Fill The Entire
-                                                                    Room With Exquisite Sound via Ring Radiator Technology.
-                                                                    Stream And Control R3 Speakers Wirelessly With Your
-                                                                    Smartphone. Sophisticated, Modern Design </span>
+                                                                <span>{{ $item->item_description }} </span>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -168,11 +164,13 @@
                                                         <div class="feedback-area">
                                                             <div class="feedback">
                                                                 <h3 class="feedback-title">Our Feedback</h3>
-                                                                <form action="#">
+                                                                <form action="{{ route('rate.item', ['name'=>$item->item_name, 'id' => $item->id]) }}" method="post">
+
+                                                                    {{ csrf_field() }}
                                                                     <p class="your-opinion">
                                                                         <label>Your Rating</label>
                                                                         <span>
-                                                                            <select class="star-rating">
+                                                                            <select class="star-rating" name="rate_count">
                                                                                 <option value="1">1</option>
                                                                                 <option value="2">2</option>
                                                                                 <option value="3">3</option>
@@ -182,15 +180,17 @@
                                                                         </span>
                                                                     </p>
                                                                     <p class="feedback-form">
+                                                                        <input type="hidden" value="{{ $item->id }}" name="item_id">
+
                                                                         <label for="feedback">Your Review</label>
-                                                                        <textarea id="feedback" name="comment" cols="45" rows="8" aria-required="true"></textarea>
+                                                                        <textarea id="feedback" name="review" cols="45" rows="8" aria-required="true"></textarea>
                                                                     </p>
                                                                     <div class="feedback-input">
                                                                         <p class="feedback-form-author">
                                                                             <label for="author">Name<span
                                                                                     class="required">*</span>
                                                                             </label>
-                                                                            <input id="author" name="author"
+                                                                            <input id="author" name="user_name"
                                                                                 value="" size="30"
                                                                                 aria-required="true" type="text">
                                                                         </p>
@@ -199,7 +199,7 @@
                                                                             <label for="email">Email<span
                                                                                     class="required">*</span>
                                                                             </label>
-                                                                            <input id="email" name="email"
+                                                                            <input id="email" name="user_email"
                                                                                 value="" size="30"
                                                                                 aria-required="true" type="text">
                                                                             <span class="required"><sub>*</sub> Required
@@ -209,7 +209,7 @@
                                                                             <a href="#" class="close"
                                                                                 data-dismiss="modal"
                                                                                 aria-label="Close">Close</a>
-                                                                            <a href="#">Submit</a>
+                                                                            <button type="submit">Submit</button>
                                                                         </div>
                                                                     </div>
                                                                 </form>
