@@ -25,11 +25,16 @@ Route::get('product/{name}/{id}', [PageController::class, 'item_info'])->name('i
 Route::post('/add-to-cart/{id}', [PageController::class, 'store'])->name('add-to-cart');
 Route::get('/shopping-cart', [PageController::class, 'shopping_cart'])->name('shopping-cart');
 
+<<<<<<< HEAD
 Route::post('product/{name}/{id}', [RatingsController::class, 'rate'])->name('rate.item');
 
 Route::get('/my-account', [UserController::class, 'my_account'])->name('my.account');
 
 Route::post('/update-cart/{id}', [UserController::class, 'update_cart'])->name('cart.update');
+=======
+Route::get('/remove-from-cart/{id}', [CartController::class, 'remove'])->name('remove-from-cart');
+Route::post('/update-cart/{id}', [CartController::class, 'update'])->name('update-cart');
+>>>>>>> my-feature-branch
 
 // Admin Routes
 Route::middleware(['IpWhiteList'])->group(function () {

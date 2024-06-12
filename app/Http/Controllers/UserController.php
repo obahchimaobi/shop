@@ -80,7 +80,10 @@ class UserController extends Controller
                 ->sum(function ($cart) {
                     return $cart->cart_price * $cart->item_quantity;
                 });
+<<<<<<< HEAD
 
+=======
+>>>>>>> my-feature-branch
             return $total_price;
         } else {
             return 0;

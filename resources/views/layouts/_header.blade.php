@@ -90,7 +90,7 @@
                     <!-- Begin Header Logo Area -->
                     <div class="col-lg-3">
                         <div class="logo pb-sm-30 pb-xs-30">
-                            <a href="{{ url('index.html') }}">
+                            <a href="{{ route('home') }}">
                                 <img src="{{ url('images/menu/logo/1.jpg') }}" alt="">
                             </a>
                         </div>

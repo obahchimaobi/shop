@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title')
+    Contact
+@endsection
 
 @section('content')
     <!-- Begin Li's Breadcrumb Area -->

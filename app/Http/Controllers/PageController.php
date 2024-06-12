@@ -58,17 +58,18 @@ class PageController extends Controller
 
     public function store(Request $request, $id)
     {
-        $request->validate([
-            'item_id' => 'required',
-            'item_name' => 'required',
-            'item_image' => 'required',
-            'item_price_old' => 'required',
-            'item_price_new' => 'required',
-            'item_category' => 'required',
-            'item_description' => 'required'
-        ]);
+        if (Auth::check()) {
+            $request->validate([
+                'item_id' => 'required',
+                'item_name' => 'required',
+                'item_image' => 'required',
+                'item_price_old' => 'required',
+                'item_price_new' => 'required',
+                'item_category' => 'required',
+                'item_description' => 'required'
+            ]);
 
-        $check_item = Cart::where('cart_id', $id)->where('user_email', Auth::user()->email)->first();
+            $check_item = Cart::where('cart_id', $id)->where('user_email', Auth::user()->email)->first();
 
         if (!$check_item) {
             $cart = new Cart([
@@ -80,7 +81,7 @@ class PageController extends Controller
                 'cart_price' => $request->item_price_new,
                 'cart_image' => $request->item_image,
                 'cart_category' => $request->item_category,
-                'item_quantity' => '1'
+                'item_quantity' => '0'
             ]);
     
             $cart->save();
