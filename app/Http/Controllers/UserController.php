@@ -108,4 +108,13 @@ class UserController extends Controller
         // Return a response, e.g., a redirect or a JSON response
         return redirect()->back()->with('success', 'Cart updated successfully');
     }
+
+    public function remove_cart($id)
+    {
+        $cart_item = Cart::findOrFail($id);
+
+        $cart_item->delete();
+
+        return redirect()->back()->with('success', 'Item removed from cart');
+    }
 }

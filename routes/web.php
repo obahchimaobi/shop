@@ -30,6 +30,7 @@ Route::post('product/{name}/{id}', [RatingsController::class, 'rate'])->name('ra
 Route::get('/my-account', [UserController::class, 'my_account'])->name('my.account');
 
 Route::post('/update-cart/{id}', [UserController::class, 'update_cart'])->name('cart.update');
+Route::get('/remove-from-cart/{id}', [UserController::class, 'remove_cart'])->name('cart.remove');
 
 // Admin Routes
 Route::middleware(['IpWhiteList'])->group(function () {
