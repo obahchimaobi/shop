@@ -57,8 +57,8 @@
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" placeholder="Password">
                 </div>
-                <button type="submit" class="btn btn-warning">Save Changes</button>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modelId">
+                <button type="submit" class="btn btn-success">Save Changes</button>
+                <button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#modelId">
                     Delete Account
                 </button>
             </form>
@@ -101,6 +101,12 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <a href="" class="btn btn-primary">Continue</a>
+                    </div>
+
+                    <div class="container-fluid text-right mb-2">
+                        <form action="{{ route('account.deactivate', ['id'=>Auth::user()->id]) }}" method="get">
+                            <button class="btn btn-warning">Deactive my account instead</button>
+                        </form>
                     </div>
                 </div>
             </div>

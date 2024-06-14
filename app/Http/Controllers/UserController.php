@@ -43,7 +43,16 @@ class UserController extends Controller
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']], $remeber)) {
             $auth_name = Auth::user()->first_name . ' ' . Auth::user()->last_name;
 
-            return redirect()->route('home')->with('success', 'Welcome back .' . $auth_name);
+            // get the user status to update
+            $getUserStatus = User::where('email', $credentials['email'])->first();
+
+            // change the value of the column needed to be changed
+            $getUserStatus->isActive = 'true';
+
+            // update the status
+            $getUserStatus->update();
+
+            return redirect()->route('home')->with('success', 'Welcome back, ' . $auth_name);
         } else {
             return redirect()->back()->with('error', 'Invalid credentials');
         }
@@ -90,9 +99,13 @@ class UserController extends Controller
     {
         // display only the first last item
 
-        $item = Cart::get();
+        if (Auth::check()) {
+            $item = Cart::get();
 
-        return view('auth.my-account', compact('item'));
+            return view('auth.my-account', compact('item'));
+        } else {
+            return redirect()->route('home');
+        }
     }
 
     public function update_cart(Request $request, $id)
@@ -116,5 +129,18 @@ class UserController extends Controller
         $cart_item->delete();
 
         return redirect()->back()->with('success', 'Item removed from cart');
+    }
+
+    public function deactivate_account($id)
+    {
+        $deactivate_account = User::findOrFail($id);
+
+        $deactivate_account->isActive = 'false';
+
+        $deactivate_account->update();
+
+        Auth::logout();
+
+        return redirect()->route('home')->with('error', 'Account deactivated. Feel free to come back anytime');
     }
 }

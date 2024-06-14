@@ -32,6 +32,8 @@ Route::get('/my-account', [UserController::class, 'my_account'])->name('my.accou
 Route::post('/update-cart/{id}', [UserController::class, 'update_cart'])->name('cart.update');
 Route::get('/remove-from-cart/{id}', [UserController::class, 'remove_cart'])->name('cart.remove');
 
+Route::get('/deactivate-account/{id}', [UserController::class, 'deactivate_account'])->name('account.deactivate');
+
 // Admin Routes
 Route::middleware(['IpWhiteList'])->group(function () {
     Route::get('admin', [AdminController::class, 'admin_login_page'])->name('admin.login-page');

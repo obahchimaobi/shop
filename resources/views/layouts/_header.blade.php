@@ -32,7 +32,7 @@
                                         
                                         @if (Auth::check())
                                             <ul class="ht-setting-list">
-                                                <li><a href="{{ url('login-register.html') }}">My Account</a></li>
+                                                <li><a href="{{ route('my.account') }}">My Account</a></li>
                                                 <li><a href="{{ url('checkout.html') }}">Checkout</a></li>
 
                                                 <li><a href="{{ route('user.logout') }}">Logout</a></li>
