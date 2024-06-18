@@ -181,7 +181,7 @@
                             <ul class="hm-menu">
                                 <!-- Begin Header Middle Wishlist Area -->
                                 <li class="hm-wishlist">
-                                    <a href="{{ url('wishlist.html') }}">
+                                    <a href="{{ route('wishlist') }}">
                                         <span class="cart-item-count wishlist-item-count
                                             cart-item-count wishlist-item-count">0</span>
                                         <i class="fa fa-heart-o"></i>

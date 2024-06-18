@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Item;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,6 +35,10 @@ class PageController extends Controller
     public function register_page()
     {
         return view('auth.register');
+    }
+
+    public function wishlist() {
+        return view('pages.wishlist');
     }
 
     public function shopping_cart()
@@ -93,6 +98,41 @@ class PageController extends Controller
                 }
             } else {
                 return back()->with('error', 'Item already in cart');
+            }
+        }
+    }
+
+    public function add_to_wishlist(Request $request, $id)
+    {
+        if (Auth::check()) {
+            $request->validate([
+                'item_id' => 'required',
+                'item_name' => 'required',
+                'item_image' => 'required',
+                'item_price_new' => 'required',
+            ]);
+
+            $check_item = Wishlist::where('wishlist_id', $id)->where('user_email', Auth::user()->email)->first();
+
+            if (!$check_item) {
+                $wishlist = new Wishlist([
+                    'user_id' => Auth::user()->id,
+                    'user_email' => Auth::user()->email,
+                    'wishlist_id' => $request->item_id,
+                    'wishlist_name' => $request->item_name,
+                    'wishlist_price' => $request->item_price_new,
+                    'wishlist_image' => $request->item_image,
+                ]);
+
+                $wishlist->save();
+
+                if ($wishlist->save()) {
+                    return back()->with('success', 'Item added to wishlist');
+                } else {
+                    return back()->with('error', 'Failed to add item to cart');
+                }
+            } else {
+                return back()->with('error', 'Item already in your wishlist');
             }
         }
     }

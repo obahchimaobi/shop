@@ -34,6 +34,9 @@ Route::get('/remove-from-cart/{id}', [UserController::class, 'remove_cart'])->na
 
 Route::get('/deactivate-account/{id}', [UserController::class, 'deactivate_account'])->name('account.deactivate');
 
+Route::get('/wishlist', [PageController::class, 'wishlist'])->name('wishlist');
+Route::post('/add-to-wishlist/{id}', [PageController::class, 'add_to_wishlist'])->name('add-to-wishlist');
+
 // Admin Routes
 Route::middleware(['IpWhiteList'])->group(function () {
     Route::get('admin', [AdminController::class, 'admin_login_page'])->name('admin.login-page');

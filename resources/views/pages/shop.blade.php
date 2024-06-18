@@ -84,7 +84,8 @@
                                                     <!-- single-product-wrap start -->
                                                     <div class="single-product-wrap">
                                                         <div class="product-image">
-                                                            <a href="{{ route('item-info', ['name'=>$items->item_name, 'id' => $items->id ]) }}">
+                                                            <a
+                                                                href="{{ route('item-info', ['name' => $items->item_name, 'id' => $items->id]) }}">
                                                                 <img src="{{ asset('storage/' . $items->item_image) }}"
                                                                     alt="Li's Product Image">
                                                             </a>
@@ -94,7 +95,8 @@
                                                             <div class="product_desc_info">
                                                                 <div class="product-review">
                                                                     <h5 class="manufacturer">
-                                                                        <a href="product-details.html">{{ $items->item_category }}</a>
+                                                                        <a
+                                                                            href="product-details.html">{{ $items->item_category }}</a>
                                                                     </h5>
                                                                     <div class="rating-box">
                                                                         <ul class="rating">
@@ -109,7 +111,8 @@
                                                                     </div>
                                                                 </div>
                                                                 <h4><a class="product_name"
-                                                                        href="single-product.html">{{ $items->item_name }}</a></h4>
+                                                                        href="single-product.html">{{ $items->item_name }}</a>
+                                                                </h4>
                                                                 <div class="price-box">
                                                                     <span class="new-price">${{ $items->item_price_new }}</span>
                                                                 </div>
@@ -118,18 +121,53 @@
                                                                 <ul class="add-actions-link">
 
                                                                     <!-- USING A FORM FIELD TO ADD ITEMS TO CART -->
-                                                                    <form action="{{ route('add-to-cart', ['id'=>$items->id]) }}" method="post" enctype="multipart/form-data">
+                                                                    <form
+                                                                        action="{{ route('add-to-cart', ['id' => $items->id]) }}"
+                                                                        method="post" enctype="multipart/form-data">
 
                                                                         {{ csrf_field() }}
-                                                                        <input type="hidden" name="item_id" value="{{ $items->id }}">
-                                                                        <input type="hidden" name="item_name" value="{{ $items->item_name }}">
-                                                                        <input type="hidden" name="item_image" value="{{ $items->item_image }}">
-                                                                        <input type="hidden" name="item_price_old" value="{{ $items->item_price_old }}">
-                                                                        <input type="hidden" name="item_price_new" value="{{ $items->item_price_new }}">
-                                                                        <input type="hidden" name="item_category" value="{{ $items->item_category}}">
-                                                                        <input type="hidden" name="item_description" value="{{ $items->item_description }}">
-                                                                        
-                                                                        <button class="add-cart active btn mb-1 mt-1" type="submit" name="add_to_cart"><span>Add to cart</></button>
+                                                                        <input type="hidden" name="item_id"
+                                                                            value="{{ $items->id }}">
+                                                                        <input type="hidden" name="item_name"
+                                                                            value="{{ $items->item_name }}">
+                                                                        <input type="hidden" name="item_image"
+                                                                            value="{{ $items->item_image }}">
+                                                                        <input type="hidden" name="item_price_old"
+                                                                            value="{{ $items->item_price_old }}">
+                                                                        <input type="hidden" name="item_price_new"
+                                                                            value="{{ $items->item_price_new }}">
+                                                                        <input type="hidden" name="item_category"
+                                                                            value="{{ $items->item_category }}">
+                                                                        <input type="hidden" name="item_description"
+                                                                            value="{{ $items->item_description }}">
+
+                                                                        <button
+                                                                            class="add-cart active btn mb-1 mt-1 text-dark"
+                                                                            type="submit" name="add_to_cart" style="font-size: 15px;"><span>Add to
+                                                                                cart</></button>
+                                                                    </form>
+
+                                                                    <form
+                                                                        action="{{ route('add-to-wishlist', ['id' => $items->id]) }}"
+                                                                        method="post" enctype="multipart/form-data">
+
+                                                                        {{ csrf_field() }}
+                                                                        <input type="hidden" name="item_id"
+                                                                            value="{{ $items->id }}">
+
+                                                                        <input type="hidden" name="item_name"
+                                                                            value="{{ $items->item_name }}">
+
+                                                                        <input type="hidden" name="item_image"
+                                                                            value="{{ $items->item_image }}">
+
+                                                                        <input type="hidden" name="item_price_new"
+                                                                            value="{{ $items->item_price_new }}">
+
+                                                                        <button
+                                                                            class="add-cart active btn mb-1 mt-1 text-dark"
+                                                                            type="submit" name="add_to_cart" style="font-size: 15px;"><span>Add to
+                                                                                wishlist</button>
                                                                     </form>
                                                                 </ul>
                                                             </div>
@@ -794,6 +832,6 @@
     <div class="paginatoin-area">
         {{ $shop->links('vendor.pagination.bootstrap-5') }}
     </div>
-</div>
+    </div>
     <!-- Content Wraper Area End Here -->
 @endsection
