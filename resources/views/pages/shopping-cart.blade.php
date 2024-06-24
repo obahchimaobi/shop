@@ -43,11 +43,13 @@
                                 @unless (count($cart) == 0)
                                     @foreach ($cart as $cartItem)
                                         <tr>
-                                            <form action="{{ route('cart.remove', ['id'=>$cartItem->id]) }}">
-                                                @method('DELETE')
-                                                <td class="li-product-remove"><button class="btn btn-danger btn-sm"><i class="fa fa-times"></i></button>
-                                                </td>
-                                            </form>
+
+                                            <td class="li-product-remove">
+                                                <button class="removeItem btn btn-danger btn-sm" data-id="{{ $cartItem->id }}">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </td>
+                                            
                                             <td class="li-product-thumbnail"><a href="#"><img
                                                         src="{{ asset('storage/' . $cartItem->cart_image) }}"
                                                         alt="Li's Product Image" style="width: 100px; height: 100px;"></a>

@@ -9,6 +9,7 @@
     <title>Limupa - @yield('title', 'Digital Products Store eCommerce')</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ url('images/favicon.png') }}">
     <!-- Material Design Iconic Font-V2.2.0 -->
@@ -43,6 +44,8 @@
     <link rel="stylesheet" href="{{ url('css/responsive.css') }}">
     <!-- Modernizr js -->
     <script src="{{ url('js/vendor/modernizr-2.8.3.min.js') }}"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -102,6 +105,173 @@
     <script src="{{ url('js/scrollUp.min.js') }}"></script>
     <!-- Main/Activator js -->
     <script src="{{ url('js/main.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.add-to-cart', function(e) {
+                e.preventDefault(); // Prevent default button action
+
+                // Retrieve item data from button attributes
+                var itemId = $(this).data('id');
+                var itemName = $(this).data('item_name');
+                var itemImage = $(this).data('item_image');
+                var itemPriceOld = $(this).data('item_price_old');
+                var itemPriceNew = $(this).data('item_price_new');
+                var itemCategory = $(this).data('item_category');
+                var itemDescription = $(this).data('item_description');
+
+                // AJAX request to server
+                $.ajax({
+                    url: '{{ route('cart.add') }}', // Update with your actual route
+                    type: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}", // CSRF token for Laravel
+                        id: itemId,
+                        name: itemName,
+                        image: itemImage,
+                        price_old: itemPriceOld,
+                        price_new: itemPriceNew,
+                        category: itemCategory,
+                        description: itemDescription
+                    },
+                    success: function(response) {
+                        // Handle success (e.g., notify user, update cart UI)
+                        if (response.alreadyInCart) {
+                            Swal.fire({
+                                title: 'Notice!',
+                                text: 'Item is already in your cart so we increased the quantity!',
+                                icon: 'info',
+                                confirmButtonText: 'OK'
+
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Refresh the page
+                                    location.reload();
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'Item added to cart successfully!',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Refresh the page
+                                    location.reload();
+                                }
+                            });
+                        }
+                    },
+                    error: function(error) {
+                        // Handle error
+                        console.log(error);
+                        alert('Error adding item to cart.');
+                    }
+                });
+            });
+
+            $(document).on('click', '.addToWishListBtn', function(e) {
+                e.preventDefault(); // Prevent default button action
+
+                // Retrieve item data from button attributes
+                var itemId = $(this).data('id');
+                var itemName = $(this).data('item_name');
+                var itemImage = $(this).data('item_image');
+                var itemPriceNew = $(this).data('item_price_new');
+
+                // AJAX request to server
+                $.ajax({
+                    url: '{{ route('wishlist.add') }}', // Update with your actual route
+                    type: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}", // CSRF token for Laravel
+                        wishlist_id: itemId,
+                        wishlist_name: itemName,
+                        wishlist_image: itemImage,
+                        wishlist_price: itemPriceNew
+                    },
+                    success: function(response) {
+                        // Handle success (e.g., notify user, update cart UI)
+                        if (response.alreadyInWishlist) {
+                            Swal.fire({
+                                title: 'Notice!',
+                                text: 'Item is already in your wishlist!',
+                                icon: 'info',
+                                confirmButtonText: 'OK'
+                            });
+                        } else {
+                            // Handle success (e.g., notify user, update wishlist UI)
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'Item has been added to wishlist!',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Refresh the page
+                                    location.reload();
+                                }
+                            });
+                        }
+                    },
+                    error: function(error) {
+                        // Handle error
+                        // console.log(error);
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Error adding item to wishlist!',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+
+                        });
+                    }
+                });
+            });
+
+            $(document).on('click', '.removeItem', function(e) {
+                e.preventDefault();
+
+                var itemId = $(this).data('id');
+
+                $.ajax({
+                    url: '{{ route('cart.remove') }}',
+                    type: 'POST',
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr(
+                        'content'), // CSRF token for Laravel
+                        _method: 'DELETE', // Simulate DELETE request
+                        id: itemId,
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Item has been deleted',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Refresh the page
+                                location.reload();
+                            }
+                        });
+                    },
+                    error: function(error) {
+                        console.log(error);
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Error removing item from cart!',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+
+                        });
+                    }
+                });
+            });
+
+        });
+    </script>
 </body>
 
 <!-- index30:23-->

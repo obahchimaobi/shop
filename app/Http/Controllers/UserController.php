@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Cart;
 use App\Models\User;
-use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -142,5 +143,18 @@ class UserController extends Controller
         Auth::logout();
 
         return redirect()->route('home')->with('error', 'Account deactivated. Feel free to come back anytime');
+    }
+
+    public function verifyAccount($token)
+    {
+        $getUserByToken = User::where('remember_token', $token)->first();
+
+        if ($getUserByToken) {
+            User::where('remember_token', $token)->update(['email_verified_at' => Carbon::now(), 'remember_token' => Str::random(40)]);
+
+            return view('verification.success');
+        }
+
+        return view('verification.failed');
     }
 }

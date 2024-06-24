@@ -22,7 +22,7 @@ Route::post('login', [UserController::class, 'login'])->name('user.login');
 Route::get('logout', [UserController::class, 'logout'])->name('user.logout');
 
 Route::get('product/{name}/{id}', [PageController::class, 'item_info'])->name('item-info');
-Route::post('/add-to-cart/{id}', [PageController::class, 'store'])->name('add-to-cart');
+Route::post('/add-to-cart', [CartController::class, 'store'])->name('cart.add');
 Route::get('/shopping-cart', [PageController::class, 'shopping_cart'])->name('shopping-cart');
 
 Route::post('product/{name}/{id}', [RatingsController::class, 'rate'])->name('rate.item');
@@ -30,12 +30,17 @@ Route::post('product/{name}/{id}', [RatingsController::class, 'rate'])->name('ra
 Route::get('/my-account', [UserController::class, 'my_account'])->name('my.account');
 
 Route::post('/update-cart/{id}', [UserController::class, 'update_cart'])->name('cart.update');
-Route::get('/remove-from-cart/{id}', [UserController::class, 'remove_cart'])->name('cart.remove');
+Route::delete('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 
 Route::get('/deactivate-account/{id}', [UserController::class, 'deactivate_account'])->name('account.deactivate');
 
 Route::get('/wishlist', [PageController::class, 'wishlist'])->name('wishlist');
-Route::post('/add-to-wishlist/{id}', [PageController::class, 'add_to_wishlist'])->name('add-to-wishlist');
+Route::post('/add-to-wishlist', [CartController::class, 'add_to_wishlist'])->name('wishlist.add');
+
+Route::get('/verify-account/{token}', [UserController::class, 'verifyAccount'])->name('verify_account');
+
+// Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+// Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
 // Admin Routes
 Route::middleware(['IpWhiteList'])->group(function () {
