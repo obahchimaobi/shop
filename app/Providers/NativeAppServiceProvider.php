@@ -13,7 +13,9 @@ class NativeAppServiceProvider implements ProvidesPhpIni
      */
     public function boot(): void
     {
-        Window::open();
+        Window::open('home');
+
+        Window::open('admin.login-page')->route('admin.login-page');
     }
 
     /**
